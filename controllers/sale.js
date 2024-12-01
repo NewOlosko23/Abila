@@ -1,11 +1,10 @@
 const Sale = require("../models/Sale");
 
-// Create a new sale
 exports.createSale = async (req, res) => {
     try {
-        const { item, vendor, totals, paymentMode } = req.body;
+        const { items, vendor, totals, paymentMode } = req.body;
 
-        const newSale = new Sale({ item, vendor, totals, paymentMode });
+        const newSale = new Sale({ items, vendor, totals, paymentMode });
         const savedSale = await newSale.save();
 
         res.status(201).json({ message: "Sale recorded successfully", data: savedSale });
@@ -13,6 +12,7 @@ exports.createSale = async (req, res) => {
         res.status(500).json({ message: "Error recording sale", error: error.message });
     }
 };
+
 
 // Update a sale
 exports.updateSale = async (req, res) => {
@@ -32,6 +32,7 @@ exports.updateSale = async (req, res) => {
     }
 };
 
+
 // Get all sales
 exports.getAllSales = async (req, res) => {
     try {
@@ -45,9 +46,9 @@ exports.getAllSales = async (req, res) => {
 // Get sales for a specific food item
 exports.getSalesByItem = async (req, res) => {
     try {
-        const { item } = req.params;
+        const { itemName } = req.params;
 
-        const sales = await Sale.find({ item });
+        const sales = await Sale.find({ "items.name": itemName });
 
         if (sales.length === 0) {
             return res.status(404).json({ message: "No sales found for this item" });
@@ -58,6 +59,7 @@ exports.getSalesByItem = async (req, res) => {
         res.status(500).json({ message: "Error fetching sales", error: error.message });
     }
 };
+
 
 // Get sales for a specific vendor
 exports.getSalesByVendor = async (req, res) => {

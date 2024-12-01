@@ -2,10 +2,24 @@ const mongoose = require("mongoose");
 
 const SaleSchema = new mongoose.Schema(
     {
-        item: {
-            type: String,
-            required: true,
-        },
+        items: [
+            {
+                name: {
+                    type: String,
+                    required: true,
+                },
+                quantity: {
+                    type: Number,
+                    required: true,
+                    min: 1,
+                },
+                price: {
+                    type: Number,
+                    required: true,
+                    min: 0,
+                },
+            },
+        ],
         vendor: {
             type: String,
             required: true,
