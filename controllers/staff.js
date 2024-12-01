@@ -1,4 +1,4 @@
-const Staff = require("../models/staff");
+const Staff = require("../models/Staff");
 
 // Add a new staff member
 exports.addStaff = async (req, res) => {
